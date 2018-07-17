@@ -5,7 +5,9 @@
 # compiler: ghc-8.2
 
 resolver: lts-12.1
-compiler: ghc-8.4
+compiler: ghc-8.5
+# compiler: ghc-8.4
+system-ghc: true
 
 system-ghc: true
 docker:

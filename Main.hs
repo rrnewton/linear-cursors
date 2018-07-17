@@ -2,7 +2,8 @@
 
 module Main where
 
--- import qualified Mutable as C
+-- import qualified Cursors.Mutable as C
+import Foreign.Storable
 
 ----------------------------------------
 
@@ -13,12 +14,13 @@ data Stream a
 data Stack a 
 
 
-pop  :: Storable a => Stack a ->. (Stack , Maybe a)
+pop  :: Storable a => Stack a ->. (Stack a, Maybe a)
+pop = undefined
+
 -- push :: Storable a => a ->. Stack a ->. Stack a
 
 
-
-f :: Int ->. Int
+f :: String ->. String
 f x = x    
 
 main = putStrLn (f "hello world")
