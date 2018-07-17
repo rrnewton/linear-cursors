@@ -1,13 +1,17 @@
 # Configures GHC to be the 8.2 variant from the Docker image
 # See https://hub.docker.com/r/tweag/linear-types/
 
+# Examples from popl18 paper used:
 # resolver: nightly-2017-12-20
 # compiler: ghc-8.2
 
-resolver: lts-12.1
-compiler: ghc-8.5
-# compiler: ghc-8.4
-system-ghc: true
+# Trying to roll forward but hitting problems (e.g. socket lib)
+# resolver: lts-12.1
+# compiler: ghc-8.5
+
+# Sticking with this for now:
+resolver: lts-11.17
+compiler: ghc-8.2
 
 system-ghc: true
 docker:
@@ -16,5 +20,24 @@ docker:
 #  image: tweag/linear-types:0.1.8
   image: mylinear
 
+extra-deps:
+  # - QuickCheck-2.9.2
+  # - hspec-2.4.3
+  # - HUnit-1.6.0.0
+  # - call-stack-0.1.0
+  # - hspec-core-2.4.3
+  # - hspec-discover-2.4.3
+  # - hspec-expectations-0.8.2
+  # - random-1.1
+  # - tf-random-0.5
+  # - ansi-terminal-0.6.2.3
+  # - async-2.1.1.1
+  # - primitive-0.6.2.0
+  # - quickcheck-io-0.1.4
+  # - setenv-0.1.1.3
+  # - stm-2.4.4.1
+  - socket-0.8.0.1
+
+  
 packages:
 - '.'
