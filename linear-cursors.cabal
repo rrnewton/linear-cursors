@@ -1,5 +1,5 @@
 
-name:           linear-packed
+name:           linear-cursors
 version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/simple#readme>
 -- homepage:       https://github.com/githubuser/simple#readme
@@ -19,7 +19,7 @@ cabal-version:  >= 1.10
 --   type: git
 --  location:
 
-executable linear-packed.exe
+executable linear-cursors.exe
   main-is: Main.hs
   other-modules:
 --           Cursors.Mutable
