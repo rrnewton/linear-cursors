@@ -25,6 +25,8 @@ executable linear-cursors.exe
   main-is: Main.hs
   other-modules:
            Cursors.Mutable
+           Cursors.Internal.UnboxedHas
+           Cursors.Internal.ByteArray
            Linear.Std
            Linear.Common
            Linear.Unsafe
@@ -40,6 +42,8 @@ executable linear-cursors.exe
       deepseq,
       socket
   default-language: Haskell2010
+  -- other-extensions: TypeOperators, GADTs, DataKinds, KindSignatures,
+  --                   BangPatterns, LambdaCase, CPP
 
 -- test-suite simple-test
 --   type: exitcode-stdio-1.0

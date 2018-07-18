@@ -39,8 +39,9 @@ module Cursors.Mutable
 
 import Linear.Std
 import Linear.Unsafe(unsafeCastLinear, unsafeUnrestricted)
-import qualified ByteArray as ByteArray
-
+import qualified Cursors.Internal.ByteArray as ByteArray
+import Cursors.Internal.UnboxedHas as UH
+    
 import Control.DeepSeq
 import Data.ByteString (ByteString)
 import qualified Data.ByteString as ByteString
@@ -52,7 +53,6 @@ import Foreign.Marshal.Alloc (mallocBytes)
 import GHC.Ptr    
 import Foreign.C.Types (CChar)
 import Prelude hiding (($))
-import Cursors.UnboxedHas as UH
 import GHC.Types(RuntimeRep, Type)
 import GHC.Prim 
 import Data.ByteString.Internal (ByteString(..))
@@ -91,7 +91,7 @@ instance NFData (Packed a) where
 {-# INLINABLE writeC #-}
 -- | Write a value to the cursor.  Write doesn't need to be linear in
 -- the value written, because that value is serialized and copied.
-writeC :: Storable a => a -> Needs (a ': rst) t ⊸ Needs rst t
+writeC :: Storable a => a -> Needs (a ': rst) t ->. Needs rst t
 writeC a = unsafeCastLinear f
   where
    f (# off, ptr #) =
@@ -147,28 +147,28 @@ withC2 (Has bs) = ByteArray.withHeadStorable2 bs
 
 {-# INLINABLE fromHas #-}
 -- | Safely "cast" a has-cursor to a packed value.
-fromHas :: Has '[a] ⊸ Packed a
+fromHas :: Has '[a] ->. Packed a
 fromHas (Has b) = Packed b
 
 {-# INLINABLE toHas #-}
 -- | Safely cast a packed value to a has cursor.
-toHas :: Packed a ⊸ Has '[a]
+toHas :: Packed a ->. Has '[a]
 toHas (Packed b) = Has b
 
 {-# INLINE unsafeCastNeeds #-}                   
 -- | Perform an unsafe conversion reflecting knowledge about the
 -- memory layout of a particular type (when packed).
-unsafeCastNeeds :: Needs l1 a ⊸ Needs l2 a
+unsafeCastNeeds :: Needs l1 a ->. Needs l2 a
 unsafeCastNeeds x = x
 -- unsafeCastNeeds (# i,p #) = (# i,p #)
 
 {-# INLINE unsafeCastHas #-}
-unsafeCastHas :: Has l1 ⊸ Has l2
+unsafeCastHas :: Has l1 ->. Has l2
 unsafeCastHas (Has b) = (Has b)
 
 {-# INLINABLE finish #-}
 -- | "Cast" a fully-initialized write cursor into a read one.
-finish :: Needs '[] a ⊸ Unrestricted (Has '[a])
+finish :: Needs '[] a ->. Unrestricted (Has '[a])
 finish = unsafeCastLinear f
  where
  f (# ix, ptr #) = unsafeUnrestricted
@@ -180,16 +180,16 @@ finish = unsafeCastLinear f
 -- | We /could/ create a general approach to safe coercions for data
 -- with the same serialized layout, analogous to, but distinct from,
 -- the Coercable class.
-untup :: Needs ((a,b) ': c) d ⊸ Needs (a ': b ': c) d
+untup :: Needs ((a,b) ': c) d ->. Needs (a ': b ': c) d
 untup (# i,p #) = (# i,p #)
 
 {-# INLINABLE tup #-}
-tup :: Needs (a ': b ': c) d ⊸ Needs ((a,b) ': c) d
+tup :: Needs (a ': b ': c) d ->. Needs ((a,b) ': c) d
 tup x = x
 
 {-# NOINLINE withOutput #-}                    
 -- | Allocate a fresh output cursor and compute with it.
-withOutput :: Int -> (Needs '[a] a ⊸ Unrestricted b) ⊸ Unrestricted b
+withOutput :: Int -> (Needs '[a] a ->. Unrestricted b) ->. Unrestricted b
 withOutput sz = unsafeCastLinear f
  where
    f fn = unsafePerformIO $ do 
@@ -210,21 +210,21 @@ withHas# (Has (PS (ForeignPtr addr _) (I# offset) _)) fn =
 
 
 {-# INLINE readIntHas# #-}
-readIntHas# :: forall rst . Has# (Int ': rst) ⊸ (# Int, Has# rst #)
+readIntHas# :: forall rst . Has# (Int ': rst) ->. (# Int, Has# rst #)
 readIntHas# = UH.headInt
 
 {-# INLINE readWord8Has# #-}
-readWord8Has# :: forall rst . Has# (Word8 ': rst) ⊸ (# Word8, Has# rst #)
+readWord8Has# :: forall rst . Has# (Word8 ': rst) ->. (# Word8, Has# rst #)
 readWord8Has# = UH.headWord8
 
 {-# INLINE unsafeCastHas# #-}
-unsafeCastHas# :: Has# a ⊸ Has# b
+unsafeCastHas# :: Has# a ->. Has# b
 unsafeCastHas# = UH.unsafeCast
 
 showHas# :: Has# a -> String
 showHas# addr = show (I# (addr2Int# addr))
 
-traceHas# :: String -> Has# a ⊸ Has# a
+traceHas# :: String -> Has# a ->. Has# a
 traceHas# str = unsafeCastLinear
                 (\x -> case unsafePerformIO (putStrLn (str++showHas# x)) of
                         () -> x)
@@ -238,7 +238,7 @@ foo = undefined
 bar :: Needs '[Bool] Double
 bar = writeC (3::Int) foo
 
-_test01 :: Needs '[Int] a ⊸ Needs '[] a
+_test01 :: Needs '[Int] a ->. Needs '[] a
 _test01 x = writeC (3::Int) x
 
 test02 :: Needs '[] Double

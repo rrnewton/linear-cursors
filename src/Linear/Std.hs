@@ -19,22 +19,22 @@ import System.IO.Unsafe(unsafePerformIO)
 
 -- * Linear version of some standard function
 
-($) :: (a⊸b) ⊸ a ⊸ b
+($) :: (a->.b) ->. a ->. b
 ($) f x = f x
 
 infixr 0 $
 
-const :: a ⊸ b -> a
+const :: a ->. b -> a
 const x _ = x
 
-swap :: (a,b) ⊸ (b,a)
+swap :: (a,b) ->. (b,a)
 swap (x,y) = (y,x)
 
 -- TODO: make strict
 -- | As long as this function is only for the sake of demonstration, let's give
 -- it a different name than the prelude one so that it doesn't force hiding
 -- Prelude's foldl.
-foldlL :: (a ⊸ b ⊸ a) -> a ⊸ [b] ⊸ a
+foldlL :: (a ->. b ->. a) -> a ->. [b] ->. a
 foldlL _reduce acc [] = acc
 foldlL reduce acc (a:l) = foldlL reduce (reduce acc a) l
 
@@ -46,12 +46,12 @@ foldlL reduce acc (a:l) = foldlL reduce (reduce acc a) l
 -- * first dup (dup a) ≃ (second dup (dup a))
 -- * …
 class Comonoid a where
-  drop :: a ⊸ ()
-  dup :: a ⊸ (a,a)
+  drop :: a ->. ()
+  dup :: a ->. (a,a)
 
 -- [aspiwack] I don't know that there is a standard notion for @move@.
 class Comonoid a => UComonoid a where
-  move :: a ⊸ Unrestricted a
+  move :: a ->. Unrestricted a
 
 instance Comonoid (Unrestricted a) where
   drop (Unrestricted _) = ()
@@ -81,7 +81,7 @@ instance UComonoid Int where
       almostMoveInt (I# i) = (Unrestricted (I# i))
 
 -- | Trace a value in a linear context.
-lintrace :: String -> a ⊸ a
+lintrace :: String -> a ->. a
 lintrace str = trace str (\x -> x)
 --    case unsafePerformIO (putStrLn str) of
 --                    () -> x
