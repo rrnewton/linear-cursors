@@ -37,8 +37,8 @@ module Cursors.Mutable
     )
     where      
 
-import Linear.Std
-import Linear.Unsafe(unsafeCastLinear, unsafeUnrestricted)
+import Cursors.Internal.Std
+import Cursors.Internal.Unsafe(unsafeCastLinear, unsafeUnrestricted)
 import qualified Cursors.Internal.ByteArray as ByteArray
 import Cursors.Internal.UnboxedHas as UH
     

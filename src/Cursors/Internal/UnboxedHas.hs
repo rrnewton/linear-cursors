@@ -19,7 +19,7 @@ module Cursors.Internal.UnboxedHas
     (Has#, headInt, headWord8, unsafeCast)
    where
 
-import Linear.Unsafe (unsafeCastLinear)
+import Cursors.Internal.Unsafe (unsafeCastLinear)
 
 import GHC.Prim 
 import GHC.Int

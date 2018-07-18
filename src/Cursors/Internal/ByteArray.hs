@@ -28,6 +28,9 @@ module Cursors.Internal.ByteArray
     )
     where
 
+import Cursors.Internal.Std
+import Cursors.Internal.Unsafe
+      
 import Data.ByteString (ByteString)
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Unsafe as ByteString (unsafePackMallocCStringLen, unsafeUseAsCString)
@@ -37,8 +40,6 @@ import Foreign.Marshal.Alloc (mallocBytes, malloc, free)
 import Foreign.Ptr
 import Foreign.Storable
 import Foreign.C.Types
-import Linear.Std
-import Linear.Unsafe
 import Prelude hiding (rem,($))
 import System.IO.Unsafe (unsafePerformIO, unsafeDupablePerformIO)
 

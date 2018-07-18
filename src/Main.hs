@@ -3,9 +3,6 @@
 module Main where
 
 import qualified Cursors.Mutable as C
-import qualified Linear.Common
-import qualified Linear.Std
-import qualified Linear.Unsafe
 import Foreign.Storable
 
 ----------------------------------------

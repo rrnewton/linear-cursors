@@ -1,5 +1,5 @@
 -- | The root of the dependence hierarchy -- the most widely used bits
--- included everywhere else.  This is reexported by Linear.Std.
+-- included everywhere else.  This is reexported by Cursors.Internal.Std.
 
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE MagicHash #-}
@@ -7,7 +7,7 @@
 {-# LANGUAGE TypeInType #-}
 {-# LANGUAGE RankNTypes #-}
 
-module Linear.Common where
+module Cursors.Internal.Common where
 import GHC.Types (Type, TYPE, RuntimeRep)
     
 -- * Unrestricted
@@ -43,11 +43,10 @@ linerror = error
 
 -- Hard-coded constant:
 --------------------------------------------------------------------------------
--- | Size allocated for each regions: 4KB.
+-- | Size allocated for each regions, e.g. 4KB.
 regionSize :: Int
 regionSize =
   -- 4096 -- in Bytes
   500 *1000*1000
 --  5 * 1000 * 1000 * 1000
 
-           

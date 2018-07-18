@@ -6,9 +6,9 @@
 {-# LANGUAGE TypeInType #-}
 {-# LANGUAGE RankNTypes #-}
 
-module Linear.Unsafe where
+module Cursors.Internal.Unsafe where
 
-import Linear.Common
+import Cursors.Internal.Common
 import qualified Unsafe.Coerce as NonLinear
 
 import GHC.Types (TYPE, RuntimeRep)
