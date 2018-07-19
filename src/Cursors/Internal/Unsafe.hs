@@ -31,11 +31,15 @@ unsafeUnrestricted :: a ->. Unrestricted a
 unsafeUnrestricted x = unsafeCoerce $ NotUnrestricted x
 
 -- * Helpers to convert library functions to expose their linearity
-
-unsafeCastLinear2 :: (a -> b -> c) ->. (a ->. b ->. c)
+unsafeCastLinear2 :: forall (r1 :: RuntimeRep) (r2 :: RuntimeRep) (r3 :: RuntimeRep)
+                           (a :: TYPE r1) (b :: TYPE r2) (c :: TYPE r3) .
+                    (a -> b -> c) ->. (a ->. b ->. c)
 unsafeCastLinear2 = unsafeCoerce
+
 
 unsafeCastLinear :: forall (r1 :: RuntimeRep) (r2 :: RuntimeRep)
                            (a :: TYPE r1) (b :: TYPE r2) .
                     (a -> b) ->. (a ->. b)
 unsafeCastLinear = unsafeCoerce
+
+

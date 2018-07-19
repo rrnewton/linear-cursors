@@ -34,6 +34,9 @@ module Cursors.Mutable
       -- * Unsafe interface
     , unsafeCastNeeds, unsafeCastHas
     , unsafeDropBytes
+
+    -- * Reexports
+    , Unrestricted(Unrestricted)
     )
     where      
 
@@ -67,7 +70,8 @@ import System.IO.Unsafe (unsafePerformIO, unsafeDupablePerformIO)
 -- bytestream before the data is fully initialized.  Once it is, a
 -- value of the (second) type parameter can be extracted.
 type Needs (l :: [Type]) t = (# Int#, Addr# #)
-
+-- Represented as a tuple of length and start pointer.
+    
 -- type family Foo (l :: [Type]) t
 -- type instance Foo l t = (# Int#, Addr# #)
 
