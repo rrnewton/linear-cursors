@@ -11,11 +11,11 @@
 module Main where
 
 import Packed.Stack
+import Packed.Cursors.Internal.Std (Unrestricted(..))
+
 import Data.Typeable
-import Cursors.Internal.Std (Unrestricted(..))
-import Foreign.Storable (Storable)
 import Data.Int (Int32)
-    
+import Foreign.Storable (Storable)
 ----------------------------------------
            
 main :: IO ()

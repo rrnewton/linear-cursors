@@ -10,7 +10,7 @@
 {-# LANGUAGE CPP #-}
 -- {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
-module Cursors.Internal.ByteArray
+module Packed.Cursors.Internal.ByteArray
     ( WByteArray,
       alloc, freeze, headStorable, 
       withHeadStorable, withHeadStorable2,
@@ -28,8 +28,8 @@ module Cursors.Internal.ByteArray
     )
     where
 
-import Cursors.Internal.Std
-import Cursors.Internal.Unsafe
+import Packed.Cursors.Internal.Std
+import Packed.Cursors.Internal.Unsafe
       
 import Data.ByteString (ByteString)
 import qualified Data.ByteString as BS

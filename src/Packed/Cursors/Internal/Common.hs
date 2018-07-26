@@ -1,5 +1,5 @@
 -- | The root of the dependence hierarchy -- the most widely used bits
--- included everywhere else.  This is reexported by Cursors.Internal.Std.
+-- included everywhere else.  This is reexported by Packed.Cursors.Internal.Std.
 
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE MagicHash #-}
@@ -7,7 +7,7 @@
 {-# LANGUAGE TypeInType #-}
 {-# LANGUAGE RankNTypes #-}
 
-module Cursors.Internal.Common where
+module Packed.Cursors.Internal.Common where
 import GHC.Types (Type, TYPE, RuntimeRep)
     
 -- * Unrestricted

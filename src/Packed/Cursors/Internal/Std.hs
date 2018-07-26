@@ -5,14 +5,14 @@
 {-# LANGUAGE TypeInType #-}
 {-# LANGUAGE RankNTypes #-}
 
-module Cursors.Internal.Std (
-  module Cursors.Internal.Std, -- self
-  module Cursors.Internal.Common
+module Packed.Cursors.Internal.Std (
+  module Packed.Cursors.Internal.Std, -- self
+  module Packed.Cursors.Internal.Common
 ) where
 
 import GHC.Types (Int(..), Type, TYPE, RuntimeRep)
-import Cursors.Internal.Common
-import Cursors.Internal.Unsafe
+import Packed.Cursors.Internal.Common
+import Packed.Cursors.Internal.Unsafe
 import Prelude hiding (($))
 import Debug.Trace
 import System.IO.Unsafe(unsafePerformIO)

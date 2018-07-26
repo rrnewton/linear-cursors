@@ -1,4 +1,4 @@
--- | Cursors into byte-addressed memory that allow type-safe writing
+-- | Packed.Cursors.into byte-addressed memory that allow type-safe writing
 -- and reading of serialized data.
 -- 
 -- Requires the "linear-types" branch of GHC from the tweag.io fork.
@@ -16,8 +16,8 @@
 {-# LANGUAGE TypeInType #-}
 -- {-# LANGUAGE TypeFamilies #-}
 
-module Cursors.Mutable
-    ( -- * Cursors, with their implementation revealed:
+module Packed.Cursors.Mutable
+    ( -- * Packed.Cursors. with their implementation revealed:
       Has(..), Needs(..), Packed
       -- * Public cursor interface
     , writeC, readC, readIntC
@@ -40,10 +40,10 @@ module Cursors.Mutable
     )
     where      
 
-import Cursors.Internal.Std
-import Cursors.Internal.Unsafe(unsafeCastLinear, unsafeUnrestricted)
-import qualified Cursors.Internal.ByteArray as ByteArray
-import Cursors.Internal.UnboxedHas as UH
+import Packed.Cursors.Internal.Std
+import Packed.Cursors.Internal.Unsafe(unsafeCastLinear, unsafeUnrestricted)
+import qualified Packed.Cursors.Internal.ByteArray as ByteArray
+import Packed.Cursors.Internal.UnboxedHas as UH
     
 import Control.DeepSeq
 import Data.ByteString (ByteString)

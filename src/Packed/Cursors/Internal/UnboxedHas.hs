@@ -15,11 +15,11 @@
 {-# LANGUAGE TypeInType #-}
 {-# LANGUAGE RankNTypes #-}
 
-module Cursors.Internal.UnboxedHas
+module Packed.Cursors.Internal.UnboxedHas
     (Has#, headInt, headWord8, unsafeCast)
    where
 
-import Cursors.Internal.Unsafe (unsafeCastLinear)
+import Packed.Cursors.Internal.Unsafe (unsafeCastLinear)
 
 import GHC.Prim 
 import GHC.Int
