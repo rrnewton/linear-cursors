@@ -16,7 +16,8 @@ import Cursors.Mutable as C
 import Data.Int
 import Data.Typeable
 import Foreign.Marshal.Alloc (mallocBytes) -- free
-import Foreign.Storable
+import Foreign.Storable hiding (peek)
+import qualified Foreign.Storable as S
 import GHC.Int
 import GHC.Prim (Addr#, (<=#), (+#), (-#),
                  plusAddr#, addr2Int#, int2Addr# )
@@ -26,6 +27,10 @@ import Prelude hiding (($))
 import System.IO.Unsafe (unsafePerformIO, unsafeDupablePerformIO)
 
 ----------------------------------------
+
+-- A reference to a value in someone else's storage.
+type Ref s a = a -- I *should* be a newtype!
+
 
 -- | A stack data structure, packed into a single flat buffer.
 -- 
@@ -53,7 +58,7 @@ pop = unsafeCastLinear f
       let a1 = plusAddr# base offset
           !(I# valsz#) = unsafeDupablePerformIO (do
                             dbgPrint (" [dbg] Reading length at "++show(Ptr a1))
-                            peek (Ptr a1))
+                            S.peek (Ptr a1))
       in
         case valsz# of
           -1# -> (# (# sz, base, offset #), Nothing #)
@@ -65,14 +70,22 @@ pop = unsafeCastLinear f
                           dbgPrint (" [dbg] decrementing offset by: "++show(I# valsz#)
                                     ++"+"++show(I# szsz_)++" to "++
                                      show (I# ((offset -# valsz#) -# szsz_)))
-                          peek a2)
+                          S.peek a2)
             in
               unsafePerformIO (dbgPrint (" [dbg] val read "++show val)) `seq`
               (# (# sz, base, (offset -# valsz#) -# szsz_ #),
                  Just (Unrestricted val) #)
 
+-- | An example of how to read a value 
+-- peek :: forall a b . Stack a ->. (forall s . Ref s a ->. Unrestricted b)
+--         ->. (# Stack a, Unrestricted b #)
+-- peek = undefined
 
+-- | Pop and discard a value (inexpensive).
+pop_ :: forall a . Stack a ->. Stack a 
+pop_ = undefined
 
+       
 {-# INLINABLE push #-}
 -- | Push an object onto a stack, serializing it and mutating the stack.
 push :: forall a . Storable a => a ->. Stack a ->. Stack a
