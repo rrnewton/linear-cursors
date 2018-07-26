@@ -1,5 +1,6 @@
--- | The root of the dependence hierarchy -- the most widely used bits
--- included everywhere else.  This is reexported by Packed.Cursors.Internal.Std.
+-- | The standard Unrestricted datatype for capturing values used any number of times.
+-- 
+-- This is reexported by Linear.Std.
 
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE MagicHash #-}
@@ -7,7 +8,15 @@
 {-# LANGUAGE TypeInType #-}
 {-# LANGUAGE RankNTypes #-}
 
-module Packed.Cursors.Internal.Common where
+module Linear.Unrestricted
+    ( -- * Unrestricted and operations on it.
+      Unrestricted(..)
+    , getUnrestricted
+    , mapU
+    , forceUnrestricted
+    , linerror
+    )
+    where
 import GHC.Types (Type, TYPE, RuntimeRep)
     
 -- * Unrestricted
@@ -41,12 +50,4 @@ linerror :: forall (a :: Type) (r :: RuntimeRep) (b :: TYPE r)  .
             String -> a ->. b
 linerror = error
 
--- Hard-coded constant:
---------------------------------------------------------------------------------
--- | Size allocated for each regions, e.g. 4KB.
-regionSize :: Int
-regionSize =
-  -- 4096 -- in Bytes
-  500 *1000*1000
---  5 * 1000 * 1000 * 1000
 

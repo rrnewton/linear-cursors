@@ -1,22 +1,31 @@
--- | Derived utilities that use the Unsafe bits.
+
+-- | Common utilities for dealing with linear types.
+-- 
+-- Derived utilities that use the Unsafe bits.
 
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE MagicHash #-}
 {-# LANGUAGE TypeInType #-}
 {-# LANGUAGE RankNTypes #-}
 
-module Packed.Cursors.Internal.Std (
-  module Packed.Cursors.Internal.Std, -- self
-  module Packed.Cursors.Internal.Common
-) where
+module Linear.Std
+    (
+     -- * Replacement Prelude functions
+     ($), const, swap, foldlL
+     -- * Additional utilities
+    , Comonoid(..), UComonoid(..)
+    , lintrace
+    -- * the Unrestricted datatype
+    , module Linear.Unrestricted
+    ) where
 
 import GHC.Types (Int(..), Type, TYPE, RuntimeRep)
-import Packed.Cursors.Internal.Common
-import Packed.Cursors.Internal.Unsafe
-import Prelude hiding (($))
+import Linear.Unrestricted
+import Linear.Unsafe
+import Prelude hiding (($), const, swap)
 import Debug.Trace
 import System.IO.Unsafe(unsafePerformIO)
-
+    
 -- * Linear version of some standard function
 
 ($) :: (a->.b) ->. a ->. b

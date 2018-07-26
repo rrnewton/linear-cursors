@@ -40,8 +40,8 @@ module Packed.Cursors.Mutable
     )
     where      
 
-import Packed.Cursors.Internal.Std
-import Packed.Cursors.Internal.Unsafe(unsafeCastLinear, unsafeUnrestricted)
+import Linear.Std
+import Linear.Unsafe(unsafeCastLinear, unsafeUnrestricted)
 import qualified Packed.Cursors.Internal.ByteArray as ByteArray
 import Packed.Cursors.Internal.UnboxedHas as UH
     
@@ -250,4 +250,16 @@ test02 = writeC True bar
 
 _test03 :: Double
 _test03 = fst (readC (getUnrestricted (finish test02)))
+-}
+
+
+-- Hard-coded constant:
+--------------------------------------------------------------------------------
+{-
+-- | Size allocated for each regions, e.g. 4KB.
+regionSize :: Int
+regionSize =
+  -- 4096 -- in Bytes
+  500 *1000*1000
+--  5 * 1000 * 1000 * 1000
 -}

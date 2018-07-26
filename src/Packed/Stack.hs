@@ -21,7 +21,7 @@ module Packed.Stack
     where
 
 import Control.Exception (evaluate)
-import Packed.Cursors.Internal.Unsafe (unsafeCastLinear, unsafeCastLinear2)
+import Linear.Unsafe (unsafeCastLinear, unsafeCastLinear2)
 import Packed.Cursors.Mutable as C hiding (Packed)
 import Data.Int
 import Foreign.Marshal.Alloc (mallocBytes,free)

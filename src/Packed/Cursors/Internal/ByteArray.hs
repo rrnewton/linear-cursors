@@ -28,8 +28,8 @@ module Packed.Cursors.Internal.ByteArray
     )
     where
 
-import Packed.Cursors.Internal.Std
-import Packed.Cursors.Internal.Unsafe
+import Linear.Std
+import Linear.Unsafe
       
 import Data.ByteString (ByteString)
 import qualified Data.ByteString as BS

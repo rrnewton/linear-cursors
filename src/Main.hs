@@ -11,7 +11,7 @@
 module Main where
 
 import Packed.Stack
-import Packed.Cursors.Internal.Std (Unrestricted(..))
+import Linear.Unrestricted (Unrestricted(..))
 
 import Data.Typeable
 import Data.Int (Int32)

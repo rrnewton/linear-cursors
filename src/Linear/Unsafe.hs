@@ -1,16 +1,21 @@
-{-# LANGUAGE GADTs #-}
+-- | Unsafe operations that tinker with linearity.  Use sparingly!
 
+{-# LANGUAGE GADTs #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE MagicHash #-}
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE TypeInType #-}
 {-# LANGUAGE RankNTypes #-}
 
-module Packed.Cursors.Internal.Unsafe where
+module Linear.Unsafe
+    ( unsafeCastLinear
+    , unsafeCastLinear2
+    , unsafeUnrestricted
+    , unsafeCoerce
+    ) where
 
-import Packed.Cursors.Internal.Common
+import Linear.Unrestricted
 import qualified Unsafe.Coerce as NonLinear
-
 import GHC.Types (TYPE, RuntimeRep)
 
     
@@ -30,16 +35,14 @@ data NotUnrestricted a where NotUnrestricted :: a ->. NotUnrestricted a
 unsafeUnrestricted :: a ->. Unrestricted a
 unsafeUnrestricted x = unsafeCoerce $ NotUnrestricted x
 
--- * Helpers to convert library functions to expose their linearity
+-- | Helper to convert arity-2 library functions to expose their linearity
 unsafeCastLinear2 :: forall (r1 :: RuntimeRep) (r2 :: RuntimeRep) (r3 :: RuntimeRep)
                            (a :: TYPE r1) (b :: TYPE r2) (c :: TYPE r3) .
                     (a -> b -> c) ->. (a ->. b ->. c)
 unsafeCastLinear2 = unsafeCoerce
 
-
+-- | Unsafely cast a single-argument function to make it linear.
 unsafeCastLinear :: forall (r1 :: RuntimeRep) (r2 :: RuntimeRep)
                            (a :: TYPE r1) (b :: TYPE r2) .
                     (a -> b) ->. (a ->. b)
 unsafeCastLinear = unsafeCoerce
-
-
